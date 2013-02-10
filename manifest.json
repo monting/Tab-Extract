@@ -1,0 +1,20 @@
+{
+  "name": "Tab Extract",
+  "version": "1.2.0",
+  "description": "A flexible & simple tool to dramatically reduce tab clutter, using the address bar.",
+  "minimum_chrome_version" : "9.0.0.0",
+  "manifest_version": 2,
+  "omnibox": { "keyword" : "ex" },
+  "background": {
+    "scripts": ["tabExtract.js"],
+    "persistent": false
+  },
+  "icons" : {
+    "16" : "icon_016.png",
+    "32" : "icon_032.png",
+ 	  "48" : "icon_048.png",
+    "128": "icon_128.png"
+  },
+  "permissions": ["tabs"]
+}
+
