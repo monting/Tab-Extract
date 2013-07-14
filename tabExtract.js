@@ -1,7 +1,5 @@
 (function() {
 
-  var keywords;
-
   var matches = function( keywords, tab ) {
     for(var i = 0; i < keywords.length; i++) {
       if( (tab.url.toLowerCase()).search(keywords[i]) > -1 ) { return true; }
