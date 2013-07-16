@@ -52,8 +52,7 @@
       else {
         chrome.windows.create( {type: "normal"}, function( win ) {
           var newWindow = win;
-          chrome.tabs.move( matchingTabs, { windowId: newWindow.id, index: -1 }, function( tabs ) {
-          } )
+          chrome.tabs.move( matchingTabs, { windowId: newWindow.id, index: -1 } );
           chrome.tabs.remove( newWindow.tabs[newWindow.tabs.length - 1].id );
         } );
       }
