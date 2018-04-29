@@ -30,7 +30,7 @@ browser.omnibox.onInputEntered.addListener((text, disposition) => {
       if (tabs.length > 0) {
         browser.windows.create()
           .then((windowInfo) => browser.tabs.move(tabs.map(tab => tab.id), { windowId: windowInfo.id, index: -1 }))
-          .then(() => browser.tabs.query({ windowId: windowInfo.id }))
+          .then((tabs) => browser.tabs.query({ windowId: tabs[0].windowId }))
           .then((newWindowTabs) => browser.tabs.remove(newWindowTabs[0].id));
       }
     })
