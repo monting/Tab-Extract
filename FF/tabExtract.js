@@ -10,7 +10,6 @@ function matchingTabs(text) {
       return tabs.filter((tab) => {
         for (let keyword of keywords) {
           if (tab.title.toLowerCase().includes(keyword) || tab.url.includes(keyword)) { return true; }
-          console.log(keyword)
         } 
         return false;
       });
