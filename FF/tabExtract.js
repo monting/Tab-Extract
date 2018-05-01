@@ -9,7 +9,7 @@ function matchingTabs(text) {
     .then((tabs) => {
       return tabs.filter((tab) => {
         for (let keyword of keywords) {
-          if (tab.title.toLowerCase().includes(keyword) || tab.url.includes(keyword)) { return true; }
+          if (tab.title.toLowerCase().includes(keyword) || tab.url.toLowerCase().includes(keyword)) { return true; }
         } 
         return false;
       });
