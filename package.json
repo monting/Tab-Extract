@@ -1,0 +1,27 @@
+{
+  "name": "tabextract",
+  "version": "1.0.0",
+  "description": "Tab Extract ==========",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:chrome && npm run build:firefox",
+    "build:chrome": "TARGET=chrome vite build",
+    "build:firefox": "TARGET=firefox vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monting/Tab-Extract.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monting/Tab-Extract/issues"
+  },
+  "homepage": "https://github.com/monting/Tab-Extract#readme",
+  "devDependencies": {
+    "vite": "^8.1.0",
+    "vite-plugin-web-extension": "^4.5.1"
+  }
+}
