@@ -1,12 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert';
 
+let inputChangedListener = null;
+let lastDefaultSuggestion = null;
+
 // Mock chrome API before importing background.js (must use dynamic import to avoid static import hoisting)
 global.chrome = {
   omnibox: {
-    setDefaultSuggestion: () => {},
-    onInputChanged: { addListener: () => {} },
-    onInputEntered: { addListener: () => {} }
+    setDefaultSuggestion: (obj) => {
+      lastDefaultSuggestion = obj;
+    },
+    onInputChanged: {
+      addListener: (fn) => {
+        inputChangedListener = fn;
+      }
+    },
+    onInputEntered: {
+      addListener: () => {}
+    }
   },
   tabs: {
     query: () => {}
@@ -59,4 +70,36 @@ test('getMatchingTabs parses flags --audible, --audio, and -a correctly', async 
   // Test normal query "search" without flags
   const result5 = await getMatchingTabs('search');
   assert.deepEqual(result5.map(t => t.id), [2]);
+});
+
+test('omnibox.onInputChanged listener provides correct suggestion count text', async () => {
+  const mockTabs = [
+    { id: 1, url: 'https://youtube.com', title: 'Video 1', audible: true },
+    { id: 2, url: 'https://google.com', title: 'Search', audible: false }
+  ];
+
+  chrome.tabs.query = () => Promise.resolve(mockTabs);
+
+  // Assert the listener was captured
+  assert.ok(inputChangedListener, 'onInputChanged listener should be registered');
+
+  // Test case 1: Query that matches 1 tab (audible youtube tab)
+  await new Promise((resolve) => {
+    inputChangedListener('youtube -a', (suggestions) => {
+      const expectedText = '1 tabs matching. Press enter to move them to a new window.';
+      assert.deepEqual(suggestions, [{ content: 'youtube -a', description: expectedText }]);
+      assert.deepEqual(lastDefaultSuggestion, { description: expectedText });
+      resolve();
+    });
+  });
+
+  // Test case 2: Query that matches 0 tabs (silent google tab with -a filter)
+  await new Promise((resolve) => {
+    inputChangedListener('google -a', (suggestions) => {
+      const expectedText = '0 tabs matching. Enter another keyword or press ESC to cancel.';
+      assert.deepEqual(suggestions, [{ content: 'google -a', description: expectedText }]);
+      assert.deepEqual(lastDefaultSuggestion, { description: expectedText });
+      resolve();
+    });
+  });
 });
