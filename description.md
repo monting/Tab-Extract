@@ -5,6 +5,10 @@
 Tab Extract helps you easily re-organize your tabs according to the subject or site, 
 or quickly find a tab, or easily remove multiple tabs.
 
+NEW features:
+- Enter "-a" to extract tabs playing sound!
+- Setting on options page to turn on/off pinned tab extraction.
+
 How it works:
 Tab Extract will move all tabs from any window with a keyword match (in their URL or page title), into a new window.
 
@@ -28,6 +32,8 @@ Notes: There is no need to select anything in the auto complete box, just press 
 If your Chrome has saved some "ex <keyword>" as a search term for autocomplete, clear your history.
 
 Firefox version: https://addons.mozilla.org/en-US/firefox/addon/tab-extract-port/
+
+
 
 Version 1.6.0 release notes:
 
