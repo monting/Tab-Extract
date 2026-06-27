@@ -7,10 +7,10 @@
   "{{chrome}}.minimum_chrome_version": "88.0.0.0",
   "omnibox": { "keyword": "ex" },
   "{{chrome}}.background": {
-    "service_worker": "src/background-chrome.js"
+    "service_worker": "src/background.js"
   },
   "{{firefox}}.background": {
-    "scripts": ["src/background-firefox.js"]
+    "scripts": ["src/background.js"]
   },
   "icons": {
     "16": "icon_016.png",
