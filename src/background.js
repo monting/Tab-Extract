@@ -41,13 +41,15 @@
   };
 
   const getMatchingTabs = function( text ) {
+    console.log("[TabExtract] getMatchingTabs called with text:", text);
     const keywords = text.toLowerCase().split(" ").filter(Boolean);
     let onlyAudible = false;
-    const audibleIndex = keywords.findIndex(k => k === "--audible" || k === "-a");
+    const audibleIndex = keywords.findIndex(k => k === "--audible" || k === "--audio" || k === "-a");
     if (audibleIndex > -1) {
       onlyAudible = true;
       keywords.splice(audibleIndex, 1);
     }
+    console.log("[TabExtract] onlyAudible:", onlyAudible, "keywords:", keywords);
     if( keywords.length === 0 && !onlyAudible ) {
       return Promise.resolve([]);
     }
@@ -56,10 +58,12 @@
       .then((tabs) => {
         const matchingTabs = [];
         for(let i = 0; i < tabs.length; i++) {
-          if( matches( keywords, tabs[i], onlyAudible ) ) {
+          const isMatched = matches( keywords, tabs[i], onlyAudible );
+          if( isMatched ) {
             matchingTabs.push( tabs[i] );
           }
         }
+        console.log("[TabExtract] Total matching tabs found:", matchingTabs.length);
         return matchingTabs;
       });
   };
