@@ -95,7 +95,7 @@ test('omnibox.onInputChanged listener provides correct suggestion count text', a
   // Test case 1: Query that matches 1 tab (audible youtube tab)
   await new Promise((resolve) => {
     inputChangedListener('youtube -a', (suggestions) => {
-      const expectedText = '1 tabs matching. Press enter to move them to a new window.';
+      const expectedText = '1 tabs matching - hit enter to extract. Type "-a" to include tabs with sound playing';
       assert.deepEqual(suggestions, [{ content: 'youtube -a', description: expectedText }]);
       assert.deepEqual(lastDefaultSuggestion, { description: expectedText });
       resolve();
@@ -131,4 +131,3 @@ test('getMatchingTabs respects extractPinned setting', async () => {
   const resultFalse = await getMatchingTabs('youtube');
   assert.deepEqual(resultFalse.map(t => t.id), [2]);
 });
-

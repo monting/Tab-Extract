@@ -19,7 +19,7 @@ const matches = function( keywords, tab, onlyAudible ) {
       const params = new URLSearchParams(hashParams);
       const originalUrl = params.get('uri') || '';
       const originalTitle = decodeURIComponent(params.get('ttl') || '');
-      
+
       // Search in the original URL and title
       for(let i = 0; i < keywords.length; i++) {
         if( originalUrl.toLowerCase().includes(keywords[i]) ) { return true; }
@@ -29,7 +29,7 @@ const matches = function( keywords, tab, onlyAudible ) {
       // If parsing fails, fall back to normal matching
     }
   }
-  
+
   // Normal matching for non-suspended tabs
   for(let i = 0; i < keywords.length; i++) {
     if( tab.url && tab.url.toLowerCase().includes(keywords[i]) ) { return true; }
@@ -79,9 +79,9 @@ const getPinnedTabIDs = function(tabs) {
 chrome.omnibox.onInputChanged.addListener( function( text, suggest ) {
   getMatchingTabs( text )
     .then((matchingTabs) => {
-      const suggestionText = (matchingTabs.length < 1) ? 
+      const suggestionText = (matchingTabs.length < 1) ?
         "0 tabs matching. Enter another keyword or press ESC to cancel."
-        : matchingTabs.length + " tabs matching. Press enter to move them to a new window.";
+        : matchingTabs.length + ' tabs matching - hit enter to extract. Type "-a" to include tabs with sound playing';
       chrome.omnibox.setDefaultSuggestion( {description: suggestionText} );
       suggest([{ content: text, description: suggestionText }]);
     } );
@@ -93,7 +93,7 @@ chrome.omnibox.onInputEntered.addListener( function( text ) {
       if( matchingTabs.length < 1 ) {
         return;
       }
-      
+
       chrome.windows.create( {type: "normal"} )
         .then((newWindow) => {
           const pinnedTabIDs = getPinnedTabIDs(matchingTabs);
