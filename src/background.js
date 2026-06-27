@@ -52,17 +52,23 @@ const getMatchingTabs = function( text ) {
     return Promise.resolve([]);
   }
 
-  return chrome.tabs.query({ windowType: "normal" })
-    .then((tabs) => {
-      const matchingTabs = [];
-      for(let i = 0; i < tabs.length; i++) {
-        const isMatched = matches( keywords, tabs[i], onlyAudible );
-        if( isMatched ) {
-          matchingTabs.push( tabs[i] );
-        }
-      }
-      console.log("[TabExtract] Total matching tabs found:", matchingTabs.length);
-      return matchingTabs;
+  return chrome.storage.sync.get({ extractPinned: true })
+    .then((settings) => {
+      return chrome.tabs.query({ windowType: "normal" })
+        .then((tabs) => {
+          const matchingTabs = [];
+          for(let i = 0; i < tabs.length; i++) {
+            if (settings.extractPinned === false && tabs[i].pinned) {
+              continue;
+            }
+            const isMatched = matches( keywords, tabs[i], onlyAudible );
+            if( isMatched ) {
+              matchingTabs.push( tabs[i] );
+            }
+          }
+          console.log("[TabExtract] Total matching tabs found:", matchingTabs.length);
+          return matchingTabs;
+        });
     });
 };
 
