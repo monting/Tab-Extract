@@ -86,7 +86,7 @@
           return;
         }
         
-        chrome.windows.create( {type: "normal", populate: true} )
+        chrome.windows.create( {type: "normal"} )
           .then((newWindow) => {
             const pinnedTabIDs = getPinnedTabIDs(matchingTabs);
             const defaultTabId = newWindow.tabs[0].id;
