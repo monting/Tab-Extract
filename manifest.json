@@ -1,6 +1,6 @@
 {
   "name": "Tab Extract",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A simple & lightweight tool to reduce tab clutter, using just the address bar.",
   "manifest_version": 3,
   "{{chrome}}.update_url": "https://clients2.google.com/service/update2/crx",
@@ -18,7 +18,11 @@
     "48": "icon_048.png",
     "128": "icon_128.png"
   },
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "storage"],
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": true
+  },
   "{{firefox}}.browser_specific_settings": {
     "gecko": {
       "strict_min_version": "109.0"

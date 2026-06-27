@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Extract Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--accent) 0%, #a855f7 100%);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .logo-container svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: linear-gradient(to right, #fff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      transition: all 0.25s ease;
+    }
+
+    .setting-item:hover {
+      border-color: rgba(99, 102, 241, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .setting-info {
+      flex: 1;
+      padding-right: 1.5rem;
+    }
+
+    .setting-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .setting-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 52px;
+      height: 28px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #334155;
+      transition: .4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #f8fafc;
+      transition: .4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent);
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px var(--accent);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Status Message */
+    .status-toast {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--success);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .status-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .status-toast svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 14h6v6H4zm10-10h6v6h-6zm0 10h6v6h-6zM4 4h6v6H4z"/>
+        </svg>
+      </div>
+      <h1>Tab Extract</h1>
+      <p>Configure extension settings</p>
+    </header>
+
+    <div class="settings-list">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Extract Pinned Tabs</div>
+          <div class="setting-desc">When disabled, pinned tabs matching your queries will be skipped and remain in their original window.</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="extractPinned" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="status-toast" id="statusToast">
+      <svg viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span>Settings saved successfully</span>
+    </div>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>
