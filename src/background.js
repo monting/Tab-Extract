@@ -79,7 +79,7 @@
           "0 tabs matching. Enter another keyword or press ESC to cancel."
           : matchingTabs.length + " tabs matching. Press enter to move them to a new window.";
         chrome.omnibox.setDefaultSuggestion( {description: suggestionText} );
-        suggest([]);
+        suggest([{ content: text, description: suggestionText }]);
       } );
   } );
 
