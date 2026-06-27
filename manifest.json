@@ -1,21 +1,27 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
   "name": "Tab Extract",
   "version": "1.5.0",
   "description": "A simple & lightweight tool to reduce tab clutter, using just the address bar.",
-  "minimum_chrome_version" : "88.0.0.0",
   "manifest_version": 3,
-  "omnibox": { "keyword" : "ex" },
-  "background": {
-    "service_worker": "TabExtract.js"
+  "{{chrome}}.update_url": "https://clients2.google.com/service/update2/crx",
+  "{{chrome}}.minimum_chrome_version": "88.0.0.0",
+  "omnibox": { "keyword": "ex" },
+  "{{chrome}}.background": {
+    "service_worker": "src/background-chrome.js"
   },
-  "icons" : {
-    "16" : "icon_016.png",
-    "32" : "icon_032.png",
- 	  "48" : "icon_048.png",
+  "{{firefox}}.background": {
+    "scripts": ["src/background-firefox.js"]
+  },
+  "icons": {
+    "16": "icon_016.png",
+    "32": "icon_032.png",
+    "48": "icon_048.png",
     "128": "icon_128.png"
   },
-  "permissions": ["tabs"]
+  "permissions": ["tabs"],
+  "{{firefox}}.browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "109.0"
+    }
+  }
 }
-
