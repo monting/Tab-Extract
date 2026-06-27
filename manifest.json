@@ -25,6 +25,7 @@
   },
   "{{firefox}}.browser_specific_settings": {
     "gecko": {
+      "id": "{5f19c5b2-8ef9-4f63-9d0b-d13bc476972a}",
       "strict_min_version": "109.0"
     }
   }
