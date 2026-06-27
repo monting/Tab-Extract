@@ -4,6 +4,8 @@ import assert from 'node:assert';
 let inputChangedListener = null;
 let lastDefaultSuggestion = null;
 
+let mockSettings = { extractPinned: true };
+
 // Mock chrome API before importing background.js (must use dynamic import to avoid static import hoisting)
 global.chrome = {
   omnibox: {
@@ -21,6 +23,13 @@ global.chrome = {
   },
   tabs: {
     query: () => {}
+  },
+  storage: {
+    sync: {
+      get: (defaults) => {
+        return Promise.resolve({ ...defaults, ...mockSettings });
+      }
+    }
   }
 };
 
@@ -103,3 +112,23 @@ test('omnibox.onInputChanged listener provides correct suggestion count text', a
     });
   });
 });
+
+test('getMatchingTabs respects extractPinned setting', async () => {
+  const mockTabs = [
+    { id: 1, url: 'https://youtube.com', title: 'Video 1', pinned: true },
+    { id: 2, url: 'https://youtube.com', title: 'Video 2', pinned: false }
+  ];
+
+  chrome.tabs.query = () => Promise.resolve(mockTabs);
+
+  // Test case 1: extractPinned = true (default)
+  mockSettings.extractPinned = true;
+  const resultTrue = await getMatchingTabs('youtube');
+  assert.deepEqual(resultTrue.map(t => t.id), [1, 2]);
+
+  // Test case 2: extractPinned = false
+  mockSettings.extractPinned = false;
+  const resultFalse = await getMatchingTabs('youtube');
+  assert.deepEqual(resultFalse.map(t => t.id), [2]);
+});
+
