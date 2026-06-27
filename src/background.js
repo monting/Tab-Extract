@@ -81,7 +81,7 @@ chrome.omnibox.onInputChanged.addListener( function( text, suggest ) {
     .then((matchingTabs) => {
       const suggestionText = (matchingTabs.length < 1) ?
         "0 tabs matching. Enter another keyword or press ESC to cancel."
-        : matchingTabs.length + ' tabs matching - hit enter to extract. Type "-a" to include tabs with sound playing';
+        : matchingTabs.length + ' tabs matching - hit enter to extract. Type "-a" to extract tabs with sound playing';
       chrome.omnibox.setDefaultSuggestion( {description: suggestionText} );
       suggest([{ content: text, description: suggestionText }]);
     } );
